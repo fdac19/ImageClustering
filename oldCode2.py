@@ -15,11 +15,6 @@ import cv2
 import sys
 import csv
 
-# check command line arguments
-if (len(sys.argv) < 3): 
-	sys.stderr.write("Usage: python3 genEmbedings.py \"inputfile\" > \"outputfile\"\n");
-	sys.exit(1)
-
 # define imageSize for VGG
 imageSize = 224
 
@@ -46,11 +41,11 @@ with open(imgs_path) as csv_file:
         correct_path.replace('(', '\(')
         correct_path.replace(')', '\)')
         try:
-            '''
+						'''
             #######gray########
             img_object = cv2.imread(correct_path, cv2.IMREAD_GRAYSCALE)
             img_object = np.stack((img_object,)*3, axis=-1)
-            '''
+						'''
             img_object = cv2.imread(correct_path)
             img_object = cv2.resize(img_object, (imageSize, imageSize))
             img_object = np.array(img_object, dtype = np.float64)
@@ -58,9 +53,6 @@ with open(imgs_path) as csv_file:
 
             resnet_feature = learning_model.predict(img_object)
             resnet_feature = np.array(resnet_feature)
-            '''import bpython
-            bpython.embed(locals())
-            exit()'''
             row.append(correct_path)
             row.extend(list(resnet_feature.flatten()))
             print(row)
