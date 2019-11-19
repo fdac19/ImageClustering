@@ -1,5 +1,6 @@
 import keras
 from keras.applications import ResNet50
+from keras.applications import ImageNet
 from keras.applications.vgg16 import VGG16
 from keras.applications import VGG19
 from keras.applications.resnet50 import preprocess_input
@@ -39,6 +40,10 @@ learning_model = Sequential()
 # add VGG layer and turn trainable off
 learning_model.add(VGG16(weights= 'imagenet' ,include_top= False))
 learning_model.layers[0].trainable = False
+
+# use ResNet instead of VGG and imagenet 
+#clustering_model.add(ResNet50(include_top = False, pooling='ave', weights = resnet_weigth_path))
+#clustering_model.layers[0].trainable = False
 
 # compile the learning model
 learning_model.compile(optimizer='sgd', loss='categorical_crossentropy', metrics=['accuracy'])
