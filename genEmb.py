@@ -1,6 +1,5 @@
 import keras
 from keras.applications import ResNet50
-from keras.applications import ImageNet
 from keras.applications.vgg16 import VGG16
 from keras.applications import VGG19
 from keras.applications.resnet50 import preprocess_input
@@ -20,7 +19,7 @@ import csv
 # connect to mongodb
 client = pymongo.MongoClient()
 icdb = client["ICDB"]
-emb_col = icdb["Embedings"] 
+emb_col = icdb["Embedings2"] 
 
 # check for command line arguments
 if(len(sys.argv) < 2):
@@ -38,11 +37,11 @@ imageSize = 224
 learning_model = Sequential()
 
 # add VGG layer and turn trainable off
-learning_model.add(VGG16(weights= 'imagenet' ,include_top= False))
-learning_model.layers[0].trainable = False
+#learning_model.add(VGG16(weights= 'imagenet' ,include_top= False))
+#learning_model.layers[0].trainable = False
 
 # use ResNet instead of VGG and imagenet 
-learning_model.add(ResNet50(include_top = False, pooling='ave', weights = 'resnet_weigths.h5'))
+learning_model.add(ResNet50(include_top = False, pooling='ave', weights = 'resnet50_weights.h5'))
 learning_model.layers[0].trainable = False
 
 # compile the learning model
