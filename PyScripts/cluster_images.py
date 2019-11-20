@@ -26,21 +26,24 @@ for entry in emb_dict:
 emb_vectors = np.array(emb_vectors)
 #print(emb_vectors)
 #emb_vectors = emb_vectors / emb_vectors.max(axis=0)
-pca = PCA(n_components=2)
-emb_vectors = pca.fit_transform(emb_vectors)
-print(emb_vectors)
+#pca = PCA(n_components=2)
+#emb_vectors = pca.fit_transform(emb_vectors)
+#print(emb_vectors)
 kmeans = KMeans(n_clusters = 15)
 kmeans.fit(emb_vectors)
 labels = kmeans.predict(emb_vectors)
 
-plt.scatter(emb_vectors[:,0], emb_vectors[:,1], c=labels, s=50, cmap='viridis')
 
-centers = kmeans.cluster_centers_
-plt.scatter(centers[:, 0], centers[:, 1], c='black', s=200, alpha=0.5)
-for i in range(len(emb_vectors)):
-	print(img_vector[i], end=""),
-	print(emb_vectors[i])
-plt.savefig('vggclus.png')
-plt.show()
-#for index, label in enumerate(labels):
-	#print(img_vector[index] + " " + str(label))
+#plt.scatter(emb_vectors[:,0], emb_vectors[:,1], c=labels, s=50, cmap='viridis')
+#centers = kmeans.cluster_centers_
+#plt.scatter(centers[:, 0], centers[:, 1], c='black', s=200, alpha=0.5)
+#plt.savefig('resnetclus.png')
+#plt.show()
+#for i in range(len(emb_vectors)):
+	#print(img_vector[i], end=" "),
+	#for j in range(len(emb_vectors)):
+		#print(emb_vectors[i][j], end=" ")
+	#print("")
+
+for index, label in enumerate(labels):
+	print(img_vector[index] + " " + str(label))
