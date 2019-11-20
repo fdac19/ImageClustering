@@ -1,8 +1,6 @@
-import keras
 import numpy as np
 import pymongo
 from sklearn.cluster import KMeans
-from sklearn.decomposition import PCA
 import cv2
 import sys
 import csv
