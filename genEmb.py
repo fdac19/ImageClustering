@@ -42,15 +42,14 @@ learning_model.add(VGG16(weights= 'imagenet' ,include_top= False))
 learning_model.layers[0].trainable = False
 
 # use ResNet instead of VGG and imagenet 
-clustering_model.add(ResNet50(include_top = False, pooling='ave', weights = resnet_weigth_path))
-clustering_model.layers[0].trainable = False
+learning_model.add(ResNet50(include_top = False, pooling='ave', weights = 'resnet_weigths.h5'))
+learning_model.layers[0].trainable = False
 
 # compile the learning model
 learning_model.compile(optimizer='sgd', loss='categorical_crossentropy', metrics=['accuracy'])
 
-emb_vectors = []
-img_vector = []
-
+# loop over images paths and generate feature vector
+# then create document and add it to the mongodb
 for img in paths:
 	img = img.replace("\n","")
 	img_object = cv2.imread(img)
@@ -61,42 +60,3 @@ for img in paths:
 	resnet_feature = np.array(resnet_feature)	
 	emb = {"img": img, "emb": list(resnet_feature.flatten().astype(float))}
 	emb_col.insert_one(emb);
-	#print(img + ";" + str(list(resnet_feature.flatten())))
-	#row.append(img)
-	#row.extend(list(resnet_feature.flatten()))
-	#print(row)
-
-
-#model = PCA(n_components = 256) 
-#results = model.fit_transform(emb_vectors)
-#print(results)
-
-#emb_vectors = np.array(emb_vectors)
-#emb_vectors = emb_vectors / emb_vectors.max(axis=0)
-#kmeans = KMeans(n_clusters = 15)
-#kmeans.fit(emb_vectors)
-#labels = kmeans.predict(emb_vectors)
-
-
-
-'''
-def cluster(donor2img2embeding, donor2day2img):
-    for donor in donor2img2embeding:
-        img_names = []
-        vectors = []
-        for img in donor2img2embeding[donor]:
-            img_names.append(img.replace('JPG','icon.JPG').replace(' ',' '))
-            vectors.append(donor2img2embeding[donor][img])
-        vectors = np.array(vectors)
-        vectors = vectors / vectors.max(axis=0)
-        ## kmeans:
-        kmeans = KMeans(n_clusters = num_clusters)
-        kmeans.fit(vectors)
-        labels = kmeans.predict(vectors)
-        ######### Agglomerative ######
-        #agglomerative = AgglomerativeClustering(n_clusters = num_clusters, linkage='single')
-        #agglomerative.fit(list(vectors))
-        #labels = agglomerative.labels_#predict(vectors)
-        for index, label in enumerate(labels):
-            print(img_names[index] , ":" , donor, "_",  label)
-'''
