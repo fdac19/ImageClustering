@@ -4,25 +4,25 @@ import cv2
 import sys
 import csv
 
-
 if(len(sys.argv) < 2):
-	print("Usage: python3 genEmb.py inputfile > outputfile")
+	print("Usage: python3 eval.py labels_file > outputfile")
 	sys.exit()
 
 # get image name and label from file
 f = open(sys.argv[1], "r")
 lines = f.readlines()
 
-f = open("ids_num.txt", "r")
-nums = f.readlines()
-numMap = {}
-for num in nums:
-	print(num)
-	tmpid = num.split(' ')[0]
-	tmpnum = num.split(' ')[1].replace("\n", "")
-	numMap[tmpid] = tmpnum
+#f = open("ids_num.txt", "r")
+#nums = f.readlines()
+#numMap = {}
+#for num in nums:
+	#print(num)
+	#tmpid = num.split(' ')[0]
+	#tmpnum = num.split(' ')[1].replace("\n", "")
+	#numMap[tmpid] = tmpnum
 
-print(numMap)
+#print(numMap)
+
 labels = {}
 
 for line in lines:

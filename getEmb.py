@@ -7,7 +7,7 @@ import csv
 
 client = pymongo.MongoClient()
 icdb = client["ICDB"]
-emb_col = icdb["Embedings"]
+emb_col = icdb["ResNet"]
 
 emb_dict = emb_col.find({})
 emb_vectors = []
@@ -19,6 +19,8 @@ for entry in emb_dict:
 	emb_vectors.append(entry['emb'])
 
 for i in range(len(img_vector)):
-	print(img_vector[i], end="")
-	print(emb_vectors[i])
+	print(img_vector[i], end=" ")
+	for j in range(len(emb_vectors[i])):
+		print(emb_vectors[i][j], end=" ")
+	print("")
 
